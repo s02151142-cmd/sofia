@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Tu Guía de Salud Física</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+        }
+
+        /* Cards Section */
+        .cards-section {
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Exercise Calculator */
+        .calculator {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .calc-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            display: none;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tip:hover {
+            transform: scale(1.05);
+        }
+
+        .tip h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🏃‍♀️ FitLife</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#ejercicios">Ejercicios</a></li>
+                <li><a href="#nutricion">Nutrición</a></li>
+                <li><a href="#calculadora">Calculadora</a></li>
+                <li><a href="#tips">Consejos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="container">
+                <h1>Tu Bienestar Físico Comienza Aquí</h1>
+                <p>Descubre el poder de un estilo de vida saludable con ejercicios efectivos y consejos profesionales</p>
+                <a href="#ejercicios" class="cta-button">¡Comenzar Ahora!</a>
+            </div>
+        </section>
+
+        <section class="cards-section" id="ejercicios">
+            <div class="container">
+                <h2 class="section-title">Categorías de Ejercicios</h2>
+                <div class="cards-grid">
+                    <div class="card" onclick="showExerciseDetails('cardio')">
+                        <span class="card-icon">❤️</span>
+                        <h3>Ejercicios Cardiovasculares</h3>
+                        <p>Fortalece tu corazón y mejora tu resistencia con rutinas de cardio diseñadas para quemar calorías y aumentar tu energía.</p>
+                    </div>
+                    <div class="card" onclick="showExerciseDetails('fuerza')">
+                        <span class="card-icon">💪</span>
+                        <h3>Entrenamiento de Fuerza</h3>
+                        <p>Desarrolla masa muscular y fortalece tu cuerpo con ejercicios de resistencia y pesas para todos los niveles.</p>
+                    </div>
+                    <div class="card" onclick="showExerciseDetails('flexibilidad')">
+                        <span class="card-icon">🧘‍♀️</span>
+                        <h3>Flexibilidad y Movilidad</h3>
+                        <p>Mejora tu flexibilidad y previene lesiones con estiramientos y ejercicios de movilidad articular.</p>
+                    </div>
+                    <div class="card" onclick="showExerciseDetails('funcional')">
+                        <span class="card-icon">⚡</span>
+                        <h3>Entrenamiento Funcional</h3>
+                        <p>Ejercicios que imitan movimientos cotidianos para mejorar tu fuerza práctica y coordinación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cards-section" id="nutricion">
+            <div class="container">
+                <h2 class="section-title">Nutrición y Bienestar</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <span class="card-icon">🥗</span>
+                        <h3>Alimentación Balanceada</h3>
+                        <p>Descubre cómo crear comidas nutritivas que nutran tu cuerpo y apoyen tus objetivos de fitness.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">💧</span>
+                        <h3>Hidratación Correcta</h3>
+                        <p>Aprende la importancia de la hidratación antes, durante y después del ejercicio para un rendimiento óptimo.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">⏰</span>
+                        <h3>Timing de Nutrientes</h3>
+                        <p>Conoce cuándo y qué comer para maximizar tu energía y recuperación muscular.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="calculator" id="calculadora">
+            <div class="container">
+                <h3>🧮 Calculadora de IMC y Calorías</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h4>Índice de Masa Corporal (IMC)</h4>
+                        <div class="form-group">
+                            <label for="peso">Peso (kg):</label>
+                            <input type="number" id="peso" placeholder="Ej: 70">
+                        </div>
+                        <div class="form-group">
+                            <label for="altura">Altura (cm):</label>
+                            <input type="number" id="altura" placeholder="Ej: 175">
+                        </div>
+                        <button class="calc-button" onclick="calcularIMC()">Calcular IMC</button>
+                        <div id="resultadoIMC" class="result"></div>
+                    </div>
+
+                    <div>
+                        <h4>Calorías Quemadas</h4>
+                        <div class="form-group">
+                            <label for="ejercicio">Tipo de Ejercicio:</label>
+                            <select id="ejercicio">
+                                <option value="caminar">Caminar (4 km/h)</option>
+                                <option value="correr">Correr (8 km/h)</option>
+                                <option value="ciclismo">Ciclismo</option>
+                                <option value="natacion">Natación</option>
+                                <option value="pesas">Entrenamiento con Pesas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tiempo">Tiempo (minutos):</label>
+                            <input type="number" id="tiempo" placeholder="Ej: 30">
+                        </div>
+                        <div class="form-group">
+                            <label for="pesoCalc">Peso (kg):</label>
+                            <input type="number" id="pesoCalc" placeholder="Ej: 70">
+                        </div>
+                        <button class="calc-button" onclick="calcularCalorias()">Calcular Calorías</button>
+                        <div id="resultadoCalorias" class="result"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tips-section" id="tips">
+            <div class="container">
+                <h2 class="section-title">Consejos de Expertos</h2>
+                <div class="tips-grid">
+                    <div class="tip">
+                        <h4>🌅 Ejercítate por la Mañana</h4>
+                        <p>Hacer ejercicio temprano acelera tu metabolismo durante todo el día.</p>
+                    </div>
+                    <div class="tip">
+                        <h4>💤 Descansa Adecuadamente</h4>
+                        <p>El sueño de calidad es esencial para la recuperación muscular.</p>
+                    </div>
+                    <div class="tip">
+                        <h4>📊 Monitorea tu Progreso</h4>
+                        <p>Lleva un registro de tus entrenamientos y celebra los pequeños logros.</p>
+                    </div>
+                    <div class="tip">
+                        <h4>🎯 Establece Metas Realistas</h4>
+                        <p>Objetivos alcanzables te mantendrán motivado a largo plazo.</p>
+                    </div>
+                    <div class="tip">
+                        <h4>🤝 Busca Apoyo Social</h4>
+                        <p>Entrenar con amigos o en grupos aumenta la adherencia al ejercicio.</p>
+                    </div>
+                    <div class="tip">
+                        <h4>🔄 Varía tu Rutina</h4>
+                        <p>Cambiar ejercicios previene el aburrimiento y los mesetas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="progress-container">
+            <div class="container">
+                <h3 style="color: white; text-align: center; margin-bottom: 1rem;">Tu Progreso Semanal</h3>
+                <div>
+                    <label style="color: white;">Días de Ejercicio esta Semana:</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                        <button onclick="updateProgress(-1)" style="background: #ff4757; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">-</button>
+                        <span id="progressText" style="color: white; font-weight: bold;">0/7 días</span>
+                        <button onclick="updateProgress(1)" style="background: #2ed573; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FitLife. Todos los derechos reservados. Tu salud, nuestra prioridad.</p>
+            <div style="margin-top: 20px; font-size: 1rem; line-height: 1.6;">
+                <p>📧 <strong>Contacto:</strong> <a href="mailto:minasofia186@gmail.com" style="color: #ffb6c1; text-decoration: underline;">minasofia186@gmail.com</a></p>
+                <p>📱 <strong>Teléfono:</strong> <a href="https://wa.me/573228846781" target="_blank" style="color: #ffb6c1; text-decoration: underline;">+57 322 8846781</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let diasEjercicio = 0;
+
+        // Funciones de calculadoras
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value) / 100; // Convertir cm a metros
+
+            if (!peso || !altura) {
+                alert('Por favor, ingresa todos los valores.');
+                return;
+            }
+
+            const imc = peso / (altura * altura);
+            let categoria = '';
+            let color = '';
+
+            if (imc < 18.5) {
+                categoria = 'Bajo peso';
+                color = '#3498db';
+            } else if (imc < 25) {
+                categoria = 'Peso normal';
+                color = '#2ecc71';
+            } else if (imc < 30) {
+                categoria = 'Sobrepeso';
+                color = '#f39c12';
+            } else {
+                categoria = 'Obesidad';
+                color = '#e74c3c';
+            }
+
+            const resultado = document.getElementById('resultadoIMC');
+            resultado.style.display = 'block';
+            resultado.style.borderLeftColor = color;
+            resultado.innerHTML = `
+                <strong>Tu IMC es: ${imc.toFixed(1)}</strong><br>
+                Categoría: ${categoria}<br>
+                <small>Recuerda que el IMC es una guía general. Consulta a un profesional de la salud para una evaluación completa.</small>
+            `;
+        }
+
+        function calcularCalorias() {
+            const ejercicio = document.getElementById('ejercicio').value;
+            const tiempo = parseFloat(document.getElementById('tiempo').value);
+            const peso = parseFloat(document.getElementById('pesoCalc').value);
+
+            if (!tiempo || !peso) {
+                alert('Por favor, ingresa todos los valores.');
+                return;
+            }
+
+            // MET (Metabolic Equivalent of Task) values
+            const metValues = {
+                'caminar': 3.8,
+                'correr': 8.0,
+                'ciclismo': 6.8,
+                'natacion': 8.0,
+                'pesas': 6.0
+            };
+
+            const met = metValues[ejercicio];
+            const calorias = (met * peso * (tiempo / 60));
+
+            const resultado = document.getElementById('resultadoCalorias');
+            resultado.style.display = 'block';
+            resultado.innerHTML = `
+                <strong>Calorías quemadas: ${Math.round(calorias)}</strong><br>
+                En ${tiempo} minutos de ${ejercicio}<br>
+                <small>Esta es una estimación aproximada basada en valores MET estándar.</small>
+            `;
+        }
+
+        // Función para mostrar detalles de ejercicios
+        function showExerciseDetails(tipo) {
+            const detalles = {
+                'cardio': {
+                    titulo: 'Ejercicios Cardiovasculares',
+                    ejercicios: ['Correr', 'Caminar rápido', 'Saltar la cuerda', 'Burpees', 'Mountain climbers'],
+                    beneficios: 'Mejora la salud del corazón, quema calorías, aumenta la resistencia'
+                },
+                'fuerza': {
+                    titulo: 'Entrenamiento de Fuerza',
+                    ejercicios: ['Flexiones', 'Sentadillas', 'Peso muerto', 'Press de banca', 'Plancha'],
+                    beneficios: 'Aumenta la masa muscular, fortalece los huesos, acelera el metabolismo'
+                },
+                'flexibilidad': {
+                    titulo: 'Flexibilidad y Movilidad',
+                    ejercicios: ['Yoga', 'Estiramientos dinámicos', 'Pilates', 'Tai Chi', 'Foam rolling'],
+                    beneficios: 'Mejora la flexibilidad, previene lesiones, reduce el estrés'
+                },
+                'funcional': {
+                    titulo: 'Entrenamiento Funcional',
+                    ejercicios: ['Kettlebell swings', 'Box jumps', 'Battle ropes', 'TRX', 'Ejercicios de equilibrio'],
+                    beneficios: 'Mejora la coordinación, fortalece el core, aumenta la agilidad'
+                }
+            };
+
+            const detalle = detalles[tipo];
+            alert(`${detalle.titulo}
+
+Ejercicios recomendados:
+• ${detalle.ejercicios.join('\n• ')}\n\nBeneficios:\n${detalle.beneficios}`);
+        }
+
+        // Función para actualizar progreso
+        function updateProgress(change) {
+            diasEjercicio = Math.max(0, Math.min(7, diasEjercicio + change));
+            const porcentaje = (diasEjercicio / 7) * 100;
+
+            document.getElementById('progressBar').style.width = porcentaje + '%';
+            document.getElementById('progressText').textContent = `${diasEjercicio}/7 días`;
+        }
+
+        // Scroll suave para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de entrada para las cards
+        function animateCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        }
+
+        // Inicializar animaciones cuando se carga la página
+        window.addEventListener('load', () => {
+            animateCards();
+        });
+
+        // Efecto parallax suave
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
